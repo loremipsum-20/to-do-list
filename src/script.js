@@ -7,6 +7,14 @@
 //  1c: clear input value: inputValue = ''
 //  1d: prevent form to submit by default: event.preventDefault();
 
+const inputValue = document.querySelector('#textInput').value;
+const form = document.querySelector('form')
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  addNewTodo();
+  inputValue.innerHTML = '';
+})
+
 
 // 2_ Add new todo to ul
 // 2a: create addNewTodo function: const addNewTodo = function() { ... }
@@ -14,5 +22,7 @@
 // 2c: create new todo template: const template = `<li class="todo-item">${inputValue}</li>`
 // 3c: add template to ul: listEl.innerHTML += template
 const addNewTodo = function () {
-  // TODO: Add new todo
+  const listEL = document.getElementById("myTasks");
+  const template = `<li class="todoInput">${inputValue.value}</li>`;
+  listEL.innerHTML += template;
 };
