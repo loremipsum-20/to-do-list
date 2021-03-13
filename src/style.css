@@ -72,8 +72,11 @@ footer {
 }
 
 .taskForm {
+  text-align: center;
 }
 
+.taskList {
+}
 
 .clearButton {
     text-align: center;

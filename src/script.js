@@ -15,7 +15,7 @@ form.addEventListener('submit', (event) => {
   event.preventDefault();
   addNewTodo();
   input.value = '';
-})
+});
 
 // 2_ Add new todo to ul
 // 2a: create addNewTodo function: const addNewTodo = function() { ... }
@@ -24,7 +24,7 @@ form.addEventListener('submit', (event) => {
 // 3c: add template to ul: listEl.innerHTML += template
 
 const addNewTodo = () => {
-  const template = `<li class="todoInput">${input.value}<span class='delete'>X</span></li>`;
+  const template = `<li class="todoInput">${input.value}<span class='edit'>EDIT </span><span class='delete'> DELETE</span></li>`;
   listEL.innerHTML += template;
 };
 
@@ -48,20 +48,15 @@ const deleteElement = (targetItem) => {
   listEL.removeChild(targetItem.parentElement);
 };
 
-
 // 4_ Clear all button
 // 4a: add HTML element to clear all to our todo header
 // 4b: listen to the click event of clear all element
   // remove all li eelement on document
   // clear out content of ul list
 
-  const clearAll = document.getElementById("clearAll");
+const clearAll = document.getElementById("clearAll");
   clearAll.addEventListener('click', () => {
     listEL.innerHTML = '';
   });
-
-
-// 5_ Edit item
-
 
 // 6_ Mark item as complete
