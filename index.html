@@ -4,27 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <!--<link href="src/style.css" rel="stylesheet" />-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <link href="src/style.css" rel="stylesheet" />
     <title>To Do List</title>
   </head>
   <body>
-    <h1>
-      To Do List
-    </h1>
 
-    <div class="container">
-      <form class="taskAdder">
-        <input id="textInput" type="text" name="task" placeholder="Today's tasks" required/>
-        <input type="submit" value="Add" />
-      </form>
+    <header>
+      <h1>
+        To Do List
+      </h1>
+    </header>
 
-      <ul id="myTasks" class="list">
-      </ul>
-    </div>
+    <main>
+      <div class="taskForm">
+        <form>
+          <input id="textInput" class="userInput" type="text" name="task" placeholder="Today's tasks" required/>
+          <input class="userSubmit" type="submit" value="Add" />
+        </form>
+        <ul id="myTasks" class="list">
+        </ul>
+      </div>
 
-    <div>
-      <button id="clearAll">Clear</button>
-    </div>
+      <div class="clearButton">
+        <button id="clearAll" class="button">Clear</button>
+      </div>
+    </main>
+
+      <footer>
+        <p>© 2021</p>
+      </footer>
 
     <script src="src/script.js"></script>
   </body>

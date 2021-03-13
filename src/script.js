@@ -48,6 +48,7 @@ const deleteElement = (targetItem) => {
   listEL.removeChild(targetItem.parentElement);
 };
 
+
 // 4_ Clear all button
 // 4a: add HTML element to clear all to our todo header
 // 4b: listen to the click event of clear all element
@@ -61,3 +62,6 @@ const deleteElement = (targetItem) => {
 
 
 // 5_ Edit item
+
+
+// 6_ Mark item as complete

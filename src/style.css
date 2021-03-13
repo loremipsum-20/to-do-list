@@ -1,18 +1,18 @@
 /* reset css code
    http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
-   License: none (public domain)
-*/
+   License: none (public domain)*/
+
 
 * {
-  margin: 0;
+  margin: 0
   padding: 0;
   border: 0;
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
+/*HTML5 display-role reset for older browsers*/
 article,
 aside,
 details,
@@ -29,10 +29,10 @@ section {
 body {
   line-height: 1;
 }
-ol,
+/*ol,
 ul {
   list-style: none;
-}
+}*/
 blockquote,
 q {
   quotes: none;
@@ -50,3 +50,49 @@ table {
 }
 
 /*ADD OWN CODE FROM HERE */
+header {
+  background-color: darkgreen;
+  color: white;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 25px;
+  margin-bottom: 20px;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: darkgreen;
+  color: white;
+  text-align: center;
+  font-size: 12px;
+  padding-top: 10px;
+}
+
+.taskForm {
+}
+
+
+.clearButton {
+    text-align: center;
+}
+
+.button {
+  border: 1px solid;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+.userInput {
+  background-color: lightgrey;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.userSubmit {
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 5px;
+}
