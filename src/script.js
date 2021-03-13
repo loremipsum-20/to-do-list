@@ -24,49 +24,29 @@ form.addEventListener('submit', (event) => {
 // 3c: add template to ul: listEl.innerHTML += template
 
 const addNewTodo = () => {
-  const template = `<li class="todoInput">${input.value}</li>`;
+  const template = `<li class="todoInput">${input.value}<span class='delete'>X</span></li>`;
   listEL.innerHTML += template;
 };
 
-
-// 3_ Add delete function
+// 3_ Delete
 // 3a: add HTML element to template (could be a button/icon)
-// 3b: Listen to click event on the whole listEL to delete
-// 3c: delete item listEL.removeChild // https://www.w3schools.com/jsref/met_node_removechild.asp
-  // hint: use event object for delete function
-  // const deleteItem = (event) => {
-  // use the "event" object to find out which li item specifically you need to remove
-  // TIP: console.log(event) and console.log(event.target) or event.currentTarget
-//}
+// 3b: Listen to the click event on the delete element
+// 3c: check if the clicked item is the delete element: https://codetogo.io/how-to-check-if-element-has-class-in-javascript/ -> test via console log before calling the function
+// 3d: delete item:
+    // listEl.removeChild() // https://www.w3schools.com/jsref/met_node_removechild.asp
+    // find parent element https://www.w3schools.com/jsref/prop_node_parentelement.asp
 
-// 1_ Delete
-// Add html element "delete" to the li template
-// Listen to the click event on the delete element
-// check if the clicked item is the delete element: https://codetogo.io/how-to-check-if-element-has-class-in-javascript/
-// delete item:
-// listEl.removeChild() // https://www.w3schools.com/jsref/met_node_removechild.asp
-// find parent element https://www.w3schools.com/jsref/prop_node_parentelement.asp
+listEL.addEventListener("click", (event) => {
+  console.log(event.target);
+  const clickedEl = event.target;
+  if (clickedEl.classList.contains("delete")) {
+    deleteElement(clickedEl);
+  }
+});
 
-//listEL.addEventListener("click", (event) => {
-  //console.log(event.target);
-  //const clickedEl = event.target;
-
-  // check if the clickedEl contain the delete element
-  // if(event.target === #deleteItem) {}
-  // https://codetogo.io/how-to-check-if-element-has-class-in-javascript/
-  // if is the delete element, then call the deleteElement()
-
-  // edit
-
-  // check/uncheck out item
-//});
-
-//const deleteElement = (targetItem) => {
-  // remove targetItem from listEl
-  // listEl.removeChild() // https://www.w3schools.com/jsref/met_node_removechild.asp
-  // find parent element https://www.w3schools.com/jsref/prop_node_parentelement.asp
-//};
-
+const deleteElement = (targetItem) => {
+  listEL.removeChild(targetItem.parentElement);
+};
 
 // 4_ Clear all button
 // 4a: add HTML element to clear all to our todo header
@@ -74,11 +54,10 @@ const addNewTodo = () => {
   // remove all li eelement on document
   // clear out content of ul list
 
-  const clearAll = document.getElementById('clearAll');
+  const clearAll = document.getElementById("clearAll");
   clearAll.addEventListener('click', () => {
     listEL.innerHTML = '';
   });
-
 
 
 // 5_ Edit item
