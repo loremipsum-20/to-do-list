@@ -29,10 +29,10 @@ section {
 body {
   line-height: 1;
 }
-/*ol,
+ol,
 ul {
   list-style: none;
-}*/
+}
 blockquote,
 q {
   quotes: none;
@@ -78,6 +78,13 @@ footer {
 .taskList {
   width: 350px;
   margin: 0 auto;
+}
+
+li {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 1em;
 }
 
 .clearButton {
