@@ -45,7 +45,7 @@ form.addEventListener("submit", (event) => {
 const addNewTodo = () => {
   if (input.value === "") return console.log("cannot be empty");
 
-  const newTodo = {
+const newTodo = {
     id: (Date.now() + Math.random()).toString(),
     title: input.value,
     isEditable: true,
@@ -72,7 +72,7 @@ listEL.addEventListener("click", (event) => {
 
         // if the new text I write is less then 2 char
         // don't modify it --> DOESN'T WORK ANYMORE
-        if (clickedItem.textContent.length < 2) {
+        if (clickedItem.textContent.trim().length < 2) {
           return alert("Todo item cannot be empty or less then two chars.");
         }
 
@@ -92,42 +92,47 @@ listEL.addEventListener("click", (event) => {
 });
 
 const deleteItem = (clickedItem) => {
-  // remove clickedItem from array
-  // find currentTodo based on todo.id and data-id
-  // render()
-  //odl code: listEL.removeChild(clickedItem.parentElement);
+  const clickedItemId = clickedItem.parentElement.dataset.id;
+  todos = todos.filter((todo, index) => {
+    return todo.id !== clickedItemId;
+  });
+
+  render();
 };
 
-
-clearCompleted.onclick = () => {
-  clearElements();
-};
-
-function clearElements() {
-  listEL.innerHTML = "";
-  // remove all items from todos
-  // render() or listEL.innerHTML = "";
-}
 
 function render() {
   // we rerender all out list and items
   // todo so, we need to clear all our items first
   clearElements();
 
-  todos.forEach((todo) => {
+todos.forEach((todo) => {
     // if isDone=true, icontenteditable = false
     // if isDone=false, icontenteditable = true
-    const template = `
+  const template = `
     <li data-id=${todo.id}>
-      <p contenteditable=true>
-        <input type='checkbox' checkbox=${todo.isDone} />
-        ${todo.title}
-      </p>
-      <button class="delete">delete</button>
-      </li>
+    <input type='checkbox' checkbox=${todo.isDone} />
+    <p contenteditable=true>
+      ${todo.title}
+    </p>
+    <button class="delete">delete</button>
+    </li>
     `;
-    // fancier way to append element at the end of the list
     // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
     listEL.insertAdjacentHTML("beforeend", template);
   });
+}
+
+function clearElements() {
+  listEL.innerHTML = "";
+};
+
+
+clearCompleted.onclick = () => {
+  clearAllElements();
+};
+
+function clearAllElements () {
+  todos.length = 0;
+  listEL.innerHTML = "";
 }
