@@ -1,62 +1,138 @@
-// GOAL:
-// Create multilple item from input field and display them in a list
+// HTML
+// add contenteditable
+// add checkbox input with isDone
+// add data-id with id from todo
+// render the temp;ate based on todos array items
 
-// 1_ create new todo on submit
-//  1a: grab value from text input: const inputValue = querySelect('#InputText).value
-//  1b: listen to submit event and addNewTodo to ul (attaching function to submit event): form.addEventListener('submit', addNewTodo(inputValue))
-//  1c: clear input value: inputValue = ''
-//  1d: prevent form to submit by default: event.preventDefault();
+// EDIT
+// listen to p tab event
+// listen to onkeydown 'ENTER'
+// if modified text is smaller the 2 chars, return
+// update title and isEditable property of the currentTodo
+// re-render
+
+// DATA STRUCTURE
+// create an array for contain all our todos
+// make each todo an obj with id, title, isEditable, isDone properties
+// push new todo to array
+
+// Still To be done:
+// remove todo from array
+// clear all todo from todos array
+// IS DONE:
+// add class to the li based on if isDone or not.
+// if isDone: gray out or strike out your todo
+// if isDone: update todo.isDone and be sure to re-render it with checkbox checked
+
+// MORE:
+// FILTER:
+// add 2 button: completed and active
+// when click on completed: show just todo with isDone === true
+// when click on active: show just todo with isDone === false
 
 const input = document.querySelector('form input[type="text"]');
 const form = document.querySelector("form");
-const listEL = document.getElementById("myTasks"); //defined outside, can be used everywhere
+const listEL = document.getElementById("myTasks");
+const clearCompleted = document.querySelector("[data-clear-completed]");
+let todos = [];
 
-form.addEventListener('submit', (event) => {
+form.addEventListener("submit", (event) => {
   event.preventDefault();
   addNewTodo();
-  input.value = '';
+  input.value = "";
 });
 
-// 2_ Add new todo to ul
-// 2a: create addNewTodo function: const addNewTodo = function() { ... }
-// 2b: grab ul element: const listEl = getElementbyId('myTasks)
-// 2c: create new todo template: const template = `<li class="todo-item">${inputValue}</li>`
-// 3c: add template to ul: listEl.innerHTML += template
-
 const addNewTodo = () => {
-  const template = `<li class="todoInput">${input.value}<span class='edit'>EDIT </span><span class='delete'> DELETE</span></li>`;
-  listEL.innerHTML += template;
+  if (input.value === "") return console.log("cannot be empty");
+
+const newTodo = {
+    id: (Date.now() + Math.random()).toString(),
+    title: input.value,
+    isEditable: true,
+    isDone: false
+  };
+
+  todos.push(newTodo);
+  render();
 };
 
-// 3_ Delete
-// 3a: add HTML element to template (could be a button/icon)
-// 3b: Listen to the click event on the delete element
-// 3c: check if the clicked item is the delete element: https://codetogo.io/how-to-check-if-element-has-class-in-javascript/ -> test via console log before calling the function
-// 3d: delete item:
-    // listEl.removeChild() // https://www.w3schools.com/jsref/met_node_removechild.asp
-    // find parent element https://www.w3schools.com/jsref/prop_node_parentelement.asp
-
 listEL.addEventListener("click", (event) => {
-  console.log(event.target);
-  const clickedEl = event.target;
-  if (clickedEl.classList.contains("delete")) {
-    deleteElement(clickedEl);
+  const clickedItem = event.target;
+
+  if (clickedItem.classList.contains("delete")) {
+    deleteItem(clickedItem);
+  }
+
+  // if I click on text to edit:
+  if (clickedItem.tagName.toLowerCase() === "p") {
+    clickedItem.onkeydown = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        const newText = clickedItem.textContent;
+
+        // if the new text I write is less then 2 char
+        // don't modify it --> DOESN'T WORK ANYMORE
+        if (clickedItem.textContent.trim().length < 2) {
+          return alert("Todo item cannot be empty or less then two chars.");
+        }
+
+        // find data-id from clicked html item
+        const clickedItemId = clickedItem.parentElement.dataset.id;
+        // find current todo obj based on id
+        const currTodo = todos.find((todo) => clickedItemId === todo.id);
+        // update clicked todo title with edited text
+        currTodo.title = newText;
+        // update isEditable property for our curent todo Item
+        // contenteditable=false
+        currTodo.isEditable = false;
+        render();
+      }
+    };
   }
 });
 
-const deleteElement = (targetItem) => {
-  listEL.removeChild(targetItem.parentElement);
-};
-
-// 4_ Clear all button
-// 4a: add HTML element to clear all to our todo header
-// 4b: listen to the click event of clear all element
-  // remove all li eelement on document
-  // clear out content of ul list
-
-const clearAll = document.getElementById("clearAll");
-  clearAll.addEventListener('click', () => {
-    listEL.innerHTML = '';
+const deleteItem = (clickedItem) => {
+  const clickedItemId = clickedItem.parentElement.dataset.id;
+  todos = todos.filter((todo, index) => {
+    return todo.id !== clickedItemId;
   });
 
-// 6_ Mark item as complete
+  render();
+};
+
+
+function render() {
+  // we rerender all out list and items
+  // todo so, we need to clear all our items first
+  clearElements();
+
+todos.forEach((todo) => {
+    // if isDone=true, icontenteditable = false
+    // if isDone=false, icontenteditable = true
+  const template = `
+    <li data-id=${todo.id}>
+    <input type='checkbox' checkbox=${todo.isDone} />
+    <p contenteditable=true>
+      ${todo.title}
+    </p>
+    <button class="delete">delete</button>
+    </li>
+    `;
+    // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
+    listEL.insertAdjacentHTML("beforeend", template);
+  });
+}
+
+function clearElements() {
+  listEL.innerHTML = "";
+};
+
+
+clearCompleted.onclick = () => {
+  clearAllElements();
+};
+
+function clearAllElements () {
+  todos.length = 0;
+  listEL.innerHTML = "";
+}
