@@ -17,12 +17,20 @@
 // push new todo to array
 
 // Still To be done:
-// remove todo from array
 // clear all todo from todos array
+// 1_ create another function where your empty your array
+// 2_ when clicking on your "clear all" button, call both your clearArray() and clearElements()
+
 // IS DONE:
-// add class to the li based on if isDone or not.
-// if isDone: gray out or strike out your todo
-// if isDone: update todo.isDone and be sure to re-render it with checkbox checked
+// 1_ while listening to the click on your ul list, check if the clickedItem.toLowerCase() === 'input
+// 2_ grab the clickedItem DOM element (i.e. clickedItem.parentElement)
+// 3_ grab the clickedItemId (check your edit function! We need to do exactly the same!)
+// 4_ find the todo.id that has same id of clickedItemId (check your edit function! We need to do exactly the same!)
+// 5_ check if the clickedItem is checked (https://www.w3schools.com/jsref/prop_checkbox_checked.asp)
+// 4_ if clickedItem is checked, assign todo.isDone === true and todo.isEditable === false
+// 5_ if clickedItem is not checked, assign todo.isDone === false
+// 6_ don't forget to re render() your list!
+// 7_ add class to the li based on if isDone or not: gray out or strike out your todo
 
 // MORE:
 // FILTER:
@@ -42,6 +50,7 @@ form.addEventListener("submit", (event) => {
   input.value = "";
 });
 
+
 const addNewTodo = () => {
   if (input.value === "") return console.log("cannot be empty");
 
@@ -55,6 +64,7 @@ const newTodo = {
   todos.push(newTodo);
   render();
 };
+
 
 listEL.addEventListener("click", (event) => {
   const clickedItem = event.target;
@@ -72,7 +82,7 @@ listEL.addEventListener("click", (event) => {
 
         // if the new text I write is less then 2 char
         // don't modify it --> DOESN'T WORK ANYMORE
-        if (clickedItem.textContent.trim().length < 2) {
+      if (clickedItem.textContent.trim().length < 2) {
           return alert("Todo item cannot be empty or less then two chars.");
         }
 
@@ -89,6 +99,19 @@ listEL.addEventListener("click", (event) => {
       }
     };
   }
+
+    // IS DONE:
+    // 1_ while listening to the click on your ul list, check if the clickedItem.toLowerCase() === 'input
+    // 2_ grab the clickedItem DOM element (i.e. clickedItem.parentElement)
+    // 3_ grab the clickedItemId (check your edit function! We need to do exactly the same!)
+    // 4_ find the todo.id that has same id of clickedItemId (check your edit function! We need to do exactly the same!)
+    // 5_ check if the clickedItem is checked (https://www.w3schools.com/jsref/prop_checkbox_checked.asp)
+    // 4_ if clickedItem is checked, assign todo.isDone === true and todo.isEditable === false
+    // 5_ if clickedItem is not checked, assign todo.isDone === false
+    // 6_ don't forget to re render() your list!
+    // 7_ add class to the li based on if isDone or not: gray out or strike out your todo
+
+
 });
 
 const deleteItem = (clickedItem) => {
