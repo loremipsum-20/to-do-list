@@ -10,6 +10,7 @@
 const input = document.querySelector('form input[type="text"]');
 const form = document.querySelector("form");
 const listEL = document.getElementById("myTasks"); //defined outside, can be used everywhere
+let isEditable = true;
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -24,9 +25,12 @@ form.addEventListener('submit', (event) => {
 // 3c: add template to ul: listEl.innerHTML += template
 
 const addNewTodo = () => {
-  const template = `<li class="todoInput">${input.value}<span class='edit'>EDIT </span><span class='delete'> DELETE</span></li>`;
+  if (input.value === "") return console.log("cannot be empty");
+  const template = `<li><p contenteditable =${isEditable}>${input.value}</p><button class="delete"> DELETE</button></li>`;
   listEL.innerHTML += template;
+  //render(input.value);
 };
+
 
 // 3_ Delete
 // 3a: add HTML element to template (could be a button/icon)
@@ -37,15 +41,30 @@ const addNewTodo = () => {
     // find parent element https://www.w3schools.com/jsref/prop_node_parentelement.asp
 
 listEL.addEventListener("click", (event) => {
-  console.log(event.target);
-  const clickedEl = event.target;
-  if (clickedEl.classList.contains("delete")) {
-    deleteElement(clickedEl);
+  const clickedItem = event.target;
+
+  if (clickedItem.classList.contains("delete")) {
+    deleteElement(clickedItem);
   }
+
+  if (clickedItem.tagName.toLowerCase() === "p") {
+    clickedItem.onkeydown = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault(); // prevents line breaks
+        const newText = clickedItem.textContent;
+      if (clickedItem.textContent.length < 2) {
+        return alert("Todo item cannot be empty or less then two chars.");
+      }
+      isEditable = false;
+      //render(newText);
+      }
+    };
+  }
+
 });
 
-const deleteElement = (targetItem) => {
-  listEL.removeChild(targetItem.parentElement);
+const deleteElement = (clickedItem) => {
+  listEL.removeChild(clickedItem.parentElement);
 };
 
 // 4_ Clear all button
@@ -58,5 +77,3 @@ const clearAll = document.getElementById("clearAll");
   clearAll.addEventListener('click', () => {
     listEL.innerHTML = '';
   });
-
-// 6_ Mark item as complete
