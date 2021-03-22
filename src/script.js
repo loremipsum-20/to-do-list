@@ -112,7 +112,7 @@ listEL.addEventListener("click", (event) => {
     // 7_ add class to the li based on if isDone or not: gray out or strike out your todo
 
     // LISTEN TO CLICK ON INPUT
-      if (clickedItem.tagName.toLowerCase() === "input") {
+    if (clickedItem.tagName.toLowerCase() === "input") {
         // WARNING: This is just guideline, doesn't mean it will work out of the box
         // fill in, try it out, check for errors on the console, console.log, ...
         // const clickedItem = ...
@@ -125,7 +125,7 @@ listEL.addEventListener("click", (event) => {
         // } else {
         //   todo isDone set to false
         // }
-
+    }
 });
 
 const deleteItem = (clickedItem) => {
