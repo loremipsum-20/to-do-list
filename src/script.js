@@ -119,9 +119,9 @@ listEL.addEventListener("click", (event) => {
         //console.log(clickedItem);
         const clickedItemId = clickedItem.parentElement.dataset.id;
         //console.log(clickedItemId);
-        const checkedTodo = todos.find((todo) => clickedItemId === todo.id);
-        console.log(checkedTodo);
-        // .classlist.toggle("completedItem");
+        const currTodo = todos.find((todo) => clickedItemId === todo.id);
+        console.log(currTodo);
+        // currTodo.classlist.toggle("completedItem");
         if (clickedItem.checked = true) {
           currTodo.isDone = true;
           currTodo.isEditable = false;
