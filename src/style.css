@@ -108,3 +108,8 @@ li {
   border-radius: 3px;
   padding: 5px;
 }
+
+.completedItem {
+  text-decoration: line-through;
+  opacity: 0.5;
+}

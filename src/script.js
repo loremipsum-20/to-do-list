@@ -115,9 +115,20 @@ listEL.addEventListener("click", (event) => {
     if (clickedItem.tagName.toLowerCase() === "input") {
         // WARNING: This is just guideline, doesn't mean it will work out of the box
         // fill in, try it out, check for errors on the console, console.log, ...
-        // const clickedItem = ...
-        // const clickedItemId  = ..
-        // const currTodo = ..
+        const clickedItem = event.target;
+        //console.log(clickedItem);
+        const clickedItemId = clickedItem.parentElement.dataset.id;
+        //console.log(clickedItemId);
+        const checkedTodo = todos.find((todo) => clickedItemId === todo.id);
+        console.log(checkedTodo);
+        // .classlist.toggle("completedItem");
+        if (clickedItem.checked = true) {
+          currTodo.isDone = true;
+          currTodo.isEditable = false;
+          //render()
+        } else {
+          currTodo.isDone = false;
+        }
         // if(clickedItem isChecked) {
         //   todo isDone set to true
         //   todo isEditable set to false
