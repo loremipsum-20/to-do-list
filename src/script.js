@@ -42,7 +42,7 @@ const input = document.querySelector('form input[type="text"]');
 const form = document.querySelector("form");
 const listEL = document.getElementById("myTasks");
 const clearCompleted = document.querySelector("[data-clear-completed]");
-let todos = [];
+let todos = [] //|| JSON.parse(localStorage.getItem('todos'));
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -50,6 +50,7 @@ form.addEventListener("submit", (event) => {
   input.value = "";
 });
 
+//localStorage.setItem('todos', JSON.stringify(todos));
 
 const addNewTodo = () => {
   if (input.value === "") return console.log("cannot be empty");
