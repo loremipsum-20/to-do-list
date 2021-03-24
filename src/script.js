@@ -121,7 +121,7 @@ listEL.addEventListener("click", (event) => {
         //console.log(clickedItemId);
         const currTodo = todos.find((todo) => clickedItemId === todo.id);
         console.log(currTodo);
-        // currTodo.classlist.toggle("completedItem");
+        //currTodo.classlist.toggle("completedItem");
         if (clickedItem.checked = true) {
           currTodo.isDone = true;
           currTodo.isEditable = false;
@@ -138,6 +138,7 @@ listEL.addEventListener("click", (event) => {
         // }
     }
 });
+
 
 const deleteItem = (clickedItem) => {
   const clickedItemId = clickedItem.parentElement.dataset.id;
