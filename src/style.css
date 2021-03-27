@@ -81,13 +81,17 @@ footer {
   padding-top: 15px;
 }
 
-
+p {
+  display: inline;
+  margin-left: 10px;
+}
 
 li {
   display: flex;
   flex-direction: row;
   align-items: baseline;
-  gap: 1em;
+  justify-content: space-between;
+  margin-bottom: 10px;
 
 }
 
@@ -97,23 +101,38 @@ li {
 
 .button {
   border: 1px solid;
-  padding: 5px;
-  border-radius: 3px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: darkgreen;
+  color: white;
+  width: 100px;
 }
 
 .userInput {
   background-color: lightgrey;
   padding: 5px;
   margin-bottom: 5px;
+  border-radius: 5px;
 }
 
 .userSubmit {
   border: 1px solid;
-  border-radius: 3px;
+  border-radius: 5px;
   padding: 5px;
+  background-color: darkgreen;
+  color: white;
 }
 
 .completedItem {
   text-decoration: line-through;
   opacity: 0.5;
+}
+
+.delete {
+  border: 1px solid;
+  padding: 5px;
+  border-radius: 5px;
+  border-color: darkgreen;
+  background-color: white;
+  color: darkgreen;
 }

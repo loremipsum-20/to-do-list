@@ -42,7 +42,8 @@ const input = document.querySelector('form input[type="text"]');
 const form = document.querySelector("form");
 const listEL = document.getElementById("myTasks");
 const clearCompleted = document.querySelector("[data-clear-completed]");
-let todos = [] //|| JSON.parse(localStorage.getItem('todos'));
+//let todos = [] || JSON.parse(localStorage.getItem('todos'));
+let todos = JSON.parse(localStorage.getItem("todos")) || [];
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -50,7 +51,6 @@ form.addEventListener("submit", (event) => {
   input.value = "";
 });
 
-//localStorage.setItem('todos', JSON.stringify(todos));
 
 const addNewTodo = () => {
   if (input.value === "") return console.log("cannot be empty");
@@ -62,14 +62,14 @@ const newTodo = {
     isDone: false
   };
   todos.push(newTodo);
-  render();
+  saveAndRender();
 };
 
 
 listEL.addEventListener("click", (event) => {
   const clickedItem = event.target;
 
-  if (clickedItem.classList.contains("delete")) {
+  if (clickedItem.parentElement.classList.contains("delete")) {
     deleteItem(clickedItem);
   }
 
@@ -84,38 +84,38 @@ listEL.addEventListener("click", (event) => {
           return alert("Todo item cannot be empty or less then two chars.");
         }
         // find data-id from clicked html item
-        const clickedItemId = clickedItem.parentElement.dataset.id;
+        const clickedItemId = clickedItem.parentElement.parentElement.dataset.id;
         // find current todo obj based on id
         const currTodo = todos.find((todo) => clickedItemId === todo.id);
         // update clicked todo title with edited text
         currTodo.title = newText;
-        render();
+        saveAndRender();
       }
     };
   }
 
     // LISTEN TO CLICK ON INPUT
     if (clickedItem.tagName.toLowerCase() === "input") {
-        const clickedItemId = clickedItem.parentElement.dataset.id;
+        const clickedItemId = clickedItem.parentElement.parentElement.dataset.id;
         const currTodo = todos.find((todo) => clickedItemId === todo.id);
         if (clickedItem.checked) {
           currTodo.isDone = true;
           //currTodo.isEditable = false;
-          render();
+          saveAndRender();
         } else {
           currTodo.isDone = false;
           //currTodo.isEditable = true;
-          render();
+          saveAndRender();
         }
     }
 });
 
 const deleteItem = (clickedItem) => {
-  const clickedItemId = clickedItem.parentElement.dataset.id;
+  const clickedItemId = clickedItem.parentElement.parentElement.dataset.id;
   todos = todos.filter((todo, index) => {
     return todo.id !== clickedItemId;
   });
-  render();
+  saveAndRender();
 };
 
 
@@ -126,12 +126,12 @@ function render() {
 
 todos.forEach((todo) => {
   const template = `
-    <li data-id=${todo.id} class='${todo.isDone ? "completedItem" : ""}'>
-    <input type='checkbox' ${todo.isDone ? "checked" : null} />
-    <p contenteditable='${!todo.isDone}'>
+    <li data-id=${todo.id} >
+    <div><input type='checkbox' ${todo.isDone ? "checked" : null} />
+    <p contenteditable='${!todo.isDone}' class='${todo.isDone ? "completedItem" : ""}'>
       ${todo.title}
-    </p>
-    <button class="delete">delete</button>
+    </p></div>
+    <button class="delete"><i class="fa fa-trash"></i></button>
     </li>
     `;
     // https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
@@ -145,10 +145,27 @@ function clearElements() {
 
 
 clearCompleted.onclick = () => {
-  clearAllElements();
+  //clearAllElements();
+  todos.length = 0;
+  saveAndRender();
 };
 
-function clearAllElements () {
-  todos.length = 0;
-  listEL.innerHTML = "";
+//function clearAllElements () {
+//  todos.length = 0;
+//  listEL.innerHTML = "";
+//}
+
+function save() {
+  localStorage.setItem("todos", JSON.stringify(todos));
 }
+
+function saveAndRender() {
+  save();
+  render();
+}
+
+function init() {
+  render(); //to display elements from the local storage if the page reloads
+}
+
+init()
