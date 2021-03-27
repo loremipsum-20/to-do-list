@@ -42,7 +42,7 @@ const input = document.querySelector('form input[type="text"]');
 const form = document.querySelector("form");
 const listEL = document.getElementById("myTasks");
 const clearCompleted = document.querySelector("[data-clear-completed]");
-let todos = [];
+let todos = [] //|| JSON.parse(localStorage.getItem('todos'));
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -50,6 +50,7 @@ form.addEventListener("submit", (event) => {
   input.value = "";
 });
 
+//localStorage.setItem('todos', JSON.stringify(todos));
 
 const addNewTodo = () => {
   if (input.value === "") return console.log("cannot be empty");
@@ -57,10 +58,9 @@ const addNewTodo = () => {
 const newTodo = {
     id: (Date.now() + Math.random()).toString(),
     title: input.value,
-    isEditable: true,
+    //isEditable: true,
     isDone: false
   };
-
   todos.push(newTodo);
   render();
 };
@@ -80,38 +80,34 @@ listEL.addEventListener("click", (event) => {
         event.preventDefault();
         const newText = clickedItem.textContent;
 
-        // if the new text I write is less then 2 char
-        // don't modify it --> DOESN'T WORK ANYMORE
       if (clickedItem.textContent.trim().length < 2) {
           return alert("Todo item cannot be empty or less then two chars.");
         }
-
         // find data-id from clicked html item
         const clickedItemId = clickedItem.parentElement.dataset.id;
         // find current todo obj based on id
         const currTodo = todos.find((todo) => clickedItemId === todo.id);
         // update clicked todo title with edited text
         currTodo.title = newText;
-        // update isEditable property for our curent todo Item
-        // contenteditable=false
-        currTodo.isEditable = false;
         render();
       }
     };
   }
 
-    // IS DONE:
-    // 1_ while listening to the click on your ul list, check if the clickedItem.toLowerCase() === 'input
-    // 2_ grab the clickedItem DOM element (i.e. clickedItem.parentElement)
-    // 3_ grab the clickedItemId (check your edit function! We need to do exactly the same!)
-    // 4_ find the todo.id that has same id of clickedItemId (check your edit function! We need to do exactly the same!)
-    // 5_ check if the clickedItem is checked (https://www.w3schools.com/jsref/prop_checkbox_checked.asp)
-    // 4_ if clickedItem is checked, assign todo.isDone === true and todo.isEditable === false
-    // 5_ if clickedItem is not checked, assign todo.isDone === false
-    // 6_ don't forget to re render() your list!
-    // 7_ add class to the li based on if isDone or not: gray out or strike out your todo
-
-
+    // LISTEN TO CLICK ON INPUT
+    if (clickedItem.tagName.toLowerCase() === "input") {
+        const clickedItemId = clickedItem.parentElement.dataset.id;
+        const currTodo = todos.find((todo) => clickedItemId === todo.id);
+        if (clickedItem.checked) {
+          currTodo.isDone = true;
+          //currTodo.isEditable = false;
+          render();
+        } else {
+          currTodo.isDone = false;
+          //currTodo.isEditable = true;
+          render();
+        }
+    }
 });
 
 const deleteItem = (clickedItem) => {
@@ -119,23 +115,20 @@ const deleteItem = (clickedItem) => {
   todos = todos.filter((todo, index) => {
     return todo.id !== clickedItemId;
   });
-
   render();
 };
 
 
 function render() {
-  // we rerender all out list and items
+  // we rerender all our list and items
   // todo so, we need to clear all our items first
   clearElements();
 
 todos.forEach((todo) => {
-    // if isDone=true, icontenteditable = false
-    // if isDone=false, icontenteditable = true
   const template = `
-    <li data-id=${todo.id}>
-    <input type='checkbox' checkbox=${todo.isDone} />
-    <p contenteditable=true>
+    <li data-id=${todo.id} class='${todo.isDone ? "completedItem" : ""}'>
+    <input type='checkbox' ${todo.isDone ? "checked" : null} />
+    <p contenteditable='${!todo.isDone}'>
       ${todo.title}
     </p>
     <button class="delete">delete</button>

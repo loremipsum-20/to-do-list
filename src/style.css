@@ -78,13 +78,17 @@ footer {
 .taskList {
   width: 350px;
   margin: 0 auto;
+  padding-top: 15px;
 }
+
+
 
 li {
   display: flex;
   flex-direction: row;
   align-items: baseline;
   gap: 1em;
+
 }
 
 .clearButton {
@@ -107,4 +111,9 @@ li {
   border: 1px solid;
   border-radius: 3px;
   padding: 5px;
+}
+
+.completedItem {
+  text-decoration: line-through;
+  opacity: 0.5;
 }
